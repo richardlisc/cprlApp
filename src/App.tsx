@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import logo from './logo47x50alpha.png';
+const io = require('socket.io-client');
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
+var navbarItems = [
+  'Stock',
+  'Machine Learning',
+  'BlaBla'
+]
+
+interface yoRes {
+  haha: string
+}
+
+class App extends Component {
+
+  componentDidMount() {
+    const socket = io('http://localhost:8000');
+    socket.on('yo',(res: yoRes)=>{console.log(res)})
+  }
+
+  render() {
+    return (
+      <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a className="navbar-brand" href="localhost:3000">
+          <img src={logo} alt="logo"></img>
         </a>
-      </header>
-    </div>
-  );
+        <ul className="navbar-nav">
+          {
+            navbarItems.map((navbarItem) => {
+              return (
+                <li className="nav-item">
+                  <a className="nav-link" href="localhost:3000">{navbarItem}</a>
+                </li>
+              )
+            })
+          }
+        </ul >
+      </nav >
+    );
+  }
 }
 
 export default App;
